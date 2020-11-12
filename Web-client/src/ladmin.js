@@ -17,7 +17,7 @@ export default class Labadmin extends React.Component {
     const accounts = await web3.eth.getAccounts();
     await HealthCare.methods
       .signRecord(this.state.recID)
-      .send({ from: accounts[0], gas: 2100000 });
+      .send({ from: "0xBA231F92186ba87985A50600e72e6a2D1E9fcb7C", gas: 2100000 });
     this.setState({ message: "Record approved!" });
   }
 

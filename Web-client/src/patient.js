@@ -1,9 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HealthCare from "./HealthCare";
-import web3 from "./web3";
+import HealthCare from "./contracts/HealthCare.json";
+import Web3 from 'web3'
+import TruffleContract from 'truffle-contract'
 
 export default class Patient extends React.Component {
+  async componentWillMount() {
+    window.ethereum.enable();
+    await this.loadWeb3();
+    await this.loadBlockchainData();
+  }
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+    }
+  }
+
+  async loadBlockchainData() {
+    const web3 = window.web3
+    // Load account
+    const accounts = await web3.eth.getAccounts()
+    this.setState({ account: accounts[0] })
+    // Network ID
+    const networkId = await web3.eth.net.getId()
+    const networkData = HealthCare.networks[networkId]
+    if(networkData) {
+      this.health = new web3.eth.Contract(HealthCare.abi, networkData.address)
+      const rec = await this.health.methods._records(2).call()
+      console.log(rec)
+    }
+  }
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -17,18 +50,15 @@ export default class Patient extends React.Component {
     };
   }
 
-  async handleClick(event) {
+  handleClick(event) {
     event.preventDefault();
-    const accounts = await web3.eth.getAccounts();
-    await HealthCare.methods
-      .newRecord(
+    
+    this.health.methods.newRecord(
         this.state.recID,
         this.state.pname,
         this.state.dDate,
         this.state.hname,
-        this.state.price
-      )
-      .send({ from: accounts[0], gas: 2100000 });
+        this.state.price).send({ from: "0xBA231F92186ba87985A50600e72e6a2D1E9fcb7C"});
     this.setState({ message: "Record created" });
   }
 

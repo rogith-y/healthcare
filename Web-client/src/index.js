@@ -31,6 +31,9 @@ class App extends React.Component {
       login:false
     }
   }
+  componentDidMount(){
+    window.ethereum.enable();
+  }
   render() {
     return (
       <div className="container container-fluid login-conatiner">
