@@ -1,4 +1,4 @@
-pragma solidity >=0.4.22 <0.6.0;
+pragma solidity ^0.5.16;
 
 contract HealthCare {
 
@@ -24,14 +24,14 @@ contract HealthCare {
 
     constructor() public {
         hospitalAdmin = msg.sender;
-        labAdmin = 0xF6F2F51c07e44efE7BC25E0EC6B332f39d930ac0;     //assigning a hard coded address from ganache                   
+        labAdmin = 0x41b3889b82E06B0434da6a11Aa7cCc0D641dC21c;     //assigning a hard coded address from ganache                   
     }
     
     
     // Mapping to store records
     mapping (uint256=> Record) public _records;
     uint256[] public recordsArr;
-
+    uint public recordCount;
     event recordCreated(uint256 ID, string testName, string date, string hospitalName, uint256 price);
     event recordSigned(uint256 ID, string testName, string date, string hospitalName, uint256 price);
     
@@ -49,7 +49,7 @@ contract HealthCare {
             _newrecord.price = price;
             _newrecord.isValue = true;
             _newrecord.signatureCount = 0;
-
+        recordCount++;
         recordsArr.push(_ID);
         emit  recordCreated(_newrecord.ID, _tName, _date, hName, price);
     }
