@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import HealthCare from "./contracts/HealthCare.json";
 import Web3 from 'web3'
-import TruffleContract from 'truffle-contract'
+
 
 export default class Patient extends React.Component {
   async componentWillMount() {
@@ -33,8 +33,18 @@ export default class Patient extends React.Component {
     const networkData = HealthCare.networks[networkId]
     if(networkData) {
       this.health = new web3.eth.Contract(HealthCare.abi, networkData.address)
-      const rec = await this.health.methods._records(2).call()
-      console.log(rec)
+      const recordCount = await this.health.methods.recordCount().call()
+      let recordArr = [];
+      let record = [];
+      for(let i=0;i<recordCount;i++)
+      {
+        recordArr.push(await this.health.methods.recordsArr(i).call())
+      }
+      for(let i=0;i<recordArr.length;i++)
+      {
+        record.push(await this.health.methods._records(recordArr[i]).call())  
+      }
+      this.setState({records:record})
     }
   }
   constructor(props) {
@@ -46,21 +56,22 @@ export default class Patient extends React.Component {
       dDate: "",
       hname: "",
       price: "",
-      message: ""
+      message: "",
+      records:[]
     };
   }
 
   handleClick(event) {
     event.preventDefault();
-    
+    window.web3.eth.getCoinbase((err, account) => {
     this.health.methods.newRecord(
         this.state.recID,
         this.state.pname,
         this.state.dDate,
         this.state.hname,
-        this.state.price).send({ from: "0xBA231F92186ba87985A50600e72e6a2D1E9fcb7C"});
-    this.setState({ message: "Record created" });
-  }
+        this.state.price).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  window.location.reload(false);});
+      })
+    }
 
   render() {
     return (
@@ -156,6 +167,20 @@ export default class Patient extends React.Component {
                   <th>Sign Count</th>
                 </tr>
               </thead>
+              <tbody>
+                {this.state.records.map((record)=>{
+                 return(
+                   <tr>
+                     <td>{record.ID}</td>
+                     <td>{record.testName}</td>
+                     <td>{record.date}</td>
+                     <td>{record.hospitalName}</td>
+                     <td>{record.price}</td>
+                     <td>{record.signatureCount}</td>
+                   </tr>
+                 ) 
+                })}
+              </tbody>
             </table>
           </div>
         </div>
