@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import HealthCare from "./contracts/HealthCare.json";
 import Web3 from 'web3'
 
@@ -157,7 +157,7 @@ export default class Patient extends React.Component {
         <div className="col-md-6 col-md-offset-2">
           <div className="c-list">
             <h2 className="text-center">Records</h2>
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-dark table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -170,7 +170,7 @@ export default class Patient extends React.Component {
               </thead>
               <tbody>
                 {this.state.records.map((record)=>{
-                 return(record.pAddr == this.state.account ?
+                 return(record.pAddr === this.state.account ?
                    <tr>
                      <td>{record.ID}</td>
                      <td>{record.testName}</td>

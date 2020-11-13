@@ -1,8 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import HealthCare from "./contracts/HealthCare.json";
 import Web3 from "web3";
-
 export default class Hadmin extends React.Component {
 
   async componentWillMount() {
@@ -63,7 +62,7 @@ export default class Hadmin extends React.Component {
     window.web3.eth.getCoinbase((err, account) => {
       this.health.methods
       .signRecord(this.state.recID)
-      .send({ from: account }).then(()=>{this.setState({ message: "Record approved!" });}); 
+      .send({ from: account }).then(()=>{this.setState({ message: "Record approved!" }); window.location.reload(false);}); 
     })
     }
 

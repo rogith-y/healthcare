@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link,Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route,Redirect } from "react-router-dom";
 import Patient from './patient'
 import Hadmin from './hadmin'
 import Labadmin from './ladmin'
@@ -12,7 +12,8 @@ const FullApp = () => (
     <div>
     <header className="App-header">
           <h1 className="App-title text-center">HealthCare Insurance</h1>
-        </header>
+          <a href="/"><input type="button" value="Home" class="btn btn-primary" style={{color:"white",backgroundColor:"rgb(103, 3, 143)"}}/></a>
+    </header>
       <Route exact path="/" component={App} />
       <Route path="/patient" component={Patient} />
       <Route path="/hadmin" component={Hadmin} />
@@ -63,7 +64,7 @@ this.state.password === "insurance"? <Redirect to="/insurance" />:null:null:null
           <input type="password"  className="form-control" placeholder="Password" onChange={e => this.setState({password:e.target.value})}  ></input></div>
           <div className="form-group">
 
-          <button className="btn btn-primary btn-block" onClick={()=> this.setState({login:true})} >Submit</button></div>
+          <button className="btn btn-success btn-block but" onClick={()=> this.setState({login:true})} >Submit</button></div>
           <div className="clearfix">
                             </div>
                         </form>

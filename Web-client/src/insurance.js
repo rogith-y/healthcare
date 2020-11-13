@@ -71,7 +71,7 @@ import Web3 from "web3";
              </thead>
              <tbody>
                 {this.state.records.map((record)=>{
-                 return(record.signatureCount==2?
+                 return(record.signatureCount===2?
                    <tr>
                      <td>{record.ID}</td>
                      <td>{record.testName}</td>
