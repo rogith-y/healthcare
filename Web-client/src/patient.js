@@ -64,6 +64,7 @@ export default class Patient extends React.Component {
   handleClick(event) {
     event.preventDefault();
     window.web3.eth.getCoinbase((err, account) => {
+      this.setState({account})
     this.health.methods.newRecord(
         this.state.recID,
         this.state.pname,
@@ -169,7 +170,7 @@ export default class Patient extends React.Component {
               </thead>
               <tbody>
                 {this.state.records.map((record)=>{
-                 return(
+                 return(record.pAddr == this.state.account ?
                    <tr>
                      <td>{record.ID}</td>
                      <td>{record.testName}</td>
@@ -177,7 +178,7 @@ export default class Patient extends React.Component {
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
                      <td>{record.signatureCount}</td>
-                   </tr>
+                   </tr>:null
                  ) 
                 })}
               </tbody>
