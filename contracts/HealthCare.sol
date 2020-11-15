@@ -16,6 +16,13 @@ contract HealthCare {
         mapping(address => uint256) signatures;
     }
 
+    struct PRecord {
+        uint256 mobileNum;
+        string patientName;
+        string dob;
+        string bloodgroup;
+        bool isValue;
+     }
     modifier signOnly {
         require(msg.sender == hospitalAdmin || msg.sender == labAdmin);
         _;
@@ -23,19 +30,27 @@ contract HealthCare {
 
     constructor() public {
         hospitalAdmin = msg.sender;
-        labAdmin = 0x41b3889b82E06B0434da6a11Aa7cCc0D641dC21c; //assigning a hard coded address from ganache
+        labAdmin = 0x41b3889b82E06B0434da6a11Aa7cCc0D641dC21c;
     }
 
     // Mapping to store records
     mapping(uint256 => Record) public _records;
+    mapping(address => PRecord) public _precords;
     uint256[] public recordsArr;
     uint256 public recordCount;
+    uint256 public precordCount;
     event recordCreated(
         uint256 ID,
         string testName,
         string date,
         string hospitalName,
         uint256 price
+    );
+    event precordCreated(
+        string patientName,
+        string dob,
+        uint256 mobileNum,
+        string bloodgroup
     );
     event recordSigned(
         uint256 ID,
@@ -68,6 +83,24 @@ contract HealthCare {
         recordCount++;
         recordsArr.push(_ID);
         emit recordCreated(_newrecord.ID, _tName, _date, hName, price);
+    }
+
+    function newPatientRecord(
+        string memory _PName,
+        string memory _dob,
+        uint256 mnum,
+        string memory blood
+    ) public {
+        PRecord storage _newrecord = _precords[msg.sender];
+
+        // Only allows new records to be created
+        _newrecord.patientName = _PName;
+        _newrecord.dob = _dob;
+        _newrecord.mobileNum = mnum;
+        _newrecord.bloodgroup = blood;
+        _newrecord.isValue = true;
+        precordCount++;
+        emit precordCreated(_newrecord.patientName, _dob, mnum, blood);
     }
 
     // Function to sign a record
