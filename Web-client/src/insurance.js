@@ -66,19 +66,19 @@ import Web3 from "web3";
                 <th>Date</th>
                 <th>Hospital Name</th>
                 <th>Price</th>
-                <th>Sign Count</th>
+                <th>Approved</th>
              </tr>
              </thead>
              <tbody>
                 {this.state.records.map((record)=>{
-                 return(record.signatureCount===2?
+                 return(record.signatureCount==="2"?
                    <tr>
                      <td>{record.ID}</td>
                      <td>{record.testName}</td>
                      <td>{record.date}</td>
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
-                     <td>{record.signatureCount}</td>
+                     <td>({record.signatureCount}/2) Approved</td>
                    </tr>:null
                  ) 
                 })}
