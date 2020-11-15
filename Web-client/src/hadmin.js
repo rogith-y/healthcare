@@ -107,7 +107,7 @@ export default class Hadmin extends React.Component {
                   <th>Date</th>
                   <th>Hospital Name</th>
                   <th>Price</th>
-                  <th>Sign Count</th>
+                  <th>Approved</th>
                 </tr>
               </thead>
               <tbody>
@@ -119,7 +119,7 @@ export default class Hadmin extends React.Component {
                      <td>{record.date}</td>
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
-                     <td>{record.signatureCount}</td>
+                     <td>({record.signatureCount}/2)</td>
                    </tr>
                  ) 
                 })}
