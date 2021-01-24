@@ -265,7 +265,7 @@ export default class Patient extends React.Component {
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
                      <td>({record.signatureCount}/2)</td>
-                   </tr>:<div>asd</div>
+                   </tr>:null
                  )
                 })}
               </tbody>
