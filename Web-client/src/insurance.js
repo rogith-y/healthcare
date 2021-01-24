@@ -66,7 +66,8 @@ import Web3 from "web3";
                 <th>Date</th>
                 <th>Hospital Name</th>
                 <th>Price</th>
-                <th>Approved</th>
+                <th>Admins Approval</th>
+                <th></th>
              </tr>
              </thead>
              <tbody>
@@ -79,6 +80,7 @@ import Web3 from "web3";
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
                      <td>({record.signatureCount}/2) Approved</td>
+                     <td><button type="button" class="btn btn-success">Approve</button>  <button class="btn btn-danger" type="button">Reject</button></td>
                    </tr>:null
                  ) 
                 })}
