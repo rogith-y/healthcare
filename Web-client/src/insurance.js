@@ -58,7 +58,7 @@ import Web3 from "web3";
       <h3  className="text-center">Insurance Page</h3>
       <div className="c-list">
       <h2 className="text-center">Approved Records</h2>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped table-hover">
         <thead>
              <tr>
                 <th>ID</th>

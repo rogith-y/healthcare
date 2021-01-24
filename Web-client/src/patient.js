@@ -244,7 +244,7 @@ export default class Patient extends React.Component {
         <div className="col-md-6 col-md-offset-2">
           <div className="c-list">
             <h2 className="text-center">Bill Records</h2>
-            <table class="table table-bordered table-dark table-striped">
+            <table class="table table-bordered table-dark table-striped table-hover">
               <thead>
               <tr>
                   <th>ID</th>
@@ -271,7 +271,7 @@ export default class Patient extends React.Component {
               </tbody>
             </table>
             <h2 className="text-center">Personal Record</h2>
-            <table class="table table-bordered table-dark table-striped">
+            <table class="table table-bordered table-dark table-striped table-hover">
               <thead>
               <tr>
                   <th>Name</th>
