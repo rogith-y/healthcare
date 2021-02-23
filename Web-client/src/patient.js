@@ -248,11 +248,12 @@ export default class Patient extends React.Component {
               <thead>
               <tr>
                   <th>ID</th>
-                  <th>Name</th>
+                  <th>Test Name</th>
                   <th>Date</th>
                   <th>Hospital Name</th>
                   <th>Price</th>
-                  <th>Approved</th>
+                  <th>Admins Approval</th>
+                  <th>Insurance Claim status</th>
               </tr>
               </thead>
               <tbody>
@@ -265,6 +266,7 @@ export default class Patient extends React.Component {
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
                      <td>({record.signatureCount}/2)</td>
+                     <td>{record.isApproved?"Approved":record.requestAnswered?"Rejected":"Pending"}</td>
                    </tr>:null
                  )
                 })}

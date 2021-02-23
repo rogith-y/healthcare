@@ -46,8 +46,29 @@ import Web3 from "web3";
       this.setState({records:record})
     }
   }
+
+  handleApprove(event){
+    event.preventDefault();
+    let id = event.target.value;
+    window.web3.eth.getCoinbase((err, account) => {
+      this.setState({account:account})
+      this.health.methods.ApproveBill(id).send({ from: account}).then(()=>{window.location.reload(false);});
+        })
+  }
+  
+  handleReject(event){
+    event.preventDefault();
+    let id = event.target.value;
+    window.web3.eth.getCoinbase((err, account) => {
+      this.setState({account:account})
+      this.health.methods.RejectBill(id).send({ from: account}).then(()=>{window.location.reload(false);});
+        })
+  }
+  
   constructor(props) {
     super(props);
+    this.handleApprove = this.handleApprove.bind(this);
+    this.handleReject = this.handleReject.bind(this);
     this.state = {
       records:[]
     };
@@ -62,7 +83,7 @@ import Web3 from "web3";
         <thead>
              <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Test Name</th>
                 <th>Date</th>
                 <th>Hospital Name</th>
                 <th>Price</th>
@@ -72,7 +93,7 @@ import Web3 from "web3";
              </thead>
              <tbody>
                 {this.state.records.map((record)=>{
-                 return(record.signatureCount==="2"?
+                 return(record.signatureCount==="2" && !record.requestAnswered?
                    <tr>
                      <td>{record.ID}</td>
                      <td>{record.testName}</td>
@@ -80,7 +101,7 @@ import Web3 from "web3";
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
                      <td>({record.signatureCount}/2) Approved</td>
-                     <td><button type="button" class="btn btn-success">Approve</button>  <button class="btn btn-danger" type="button">Reject</button></td>
+                     <td><button type="button" value={record.ID} class="btn btn-success" onClick={this.handleApprove}>Approve</button>  <button class="btn btn-danger" type="button" value={record.ID} onClick={this.handleReject}>Reject</button></td>
                    </tr>:null
                  ) 
                 })}
