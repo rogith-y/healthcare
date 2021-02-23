@@ -99,7 +99,7 @@ export default class Hadmin extends React.Component {
         <div className="col-md-6 col-md-offset-2">
           <div className="c-list">
             <h2 className="text-center">Records</h2>
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-hover">
               <thead>
                 <tr>
                   <th>ID</th>

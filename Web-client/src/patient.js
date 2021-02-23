@@ -244,15 +244,16 @@ export default class Patient extends React.Component {
         <div className="col-md-6 col-md-offset-2">
           <div className="c-list">
             <h2 className="text-center">Bill Records</h2>
-            <table class="table table-bordered table-dark table-striped">
+            <table class="table table-bordered table-dark table-striped table-hover">
               <thead>
               <tr>
                   <th>ID</th>
-                  <th>Name</th>
+                  <th>Test Name</th>
                   <th>Date</th>
                   <th>Hospital Name</th>
                   <th>Price</th>
-                  <th>Approved</th>
+                  <th>Admins Approval</th>
+                  <th>Insurance Claim status</th>
               </tr>
               </thead>
               <tbody>
@@ -265,13 +266,14 @@ export default class Patient extends React.Component {
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
                      <td>({record.signatureCount}/2)</td>
+                     <td>{record.isApproved?"Approved":record.requestAnswered?"Rejected":"Pending"}</td>
                    </tr>:null
                  )
                 })}
               </tbody>
             </table>
             <h2 className="text-center">Personal Record</h2>
-            <table class="table table-bordered table-dark table-striped">
+            <table class="table table-bordered table-dark table-striped table-hover">
               <thead>
               <tr>
                   <th>Name</th>
