@@ -3,6 +3,8 @@ import React from "react";
 import HealthCare from "./contracts/HealthCare.json";
 import Web3 from 'web3'
 
+const ipfsClient = require('ipfs-http-client')
+const ipfs = ipfsClient({host:'ipfs.infura.io',port:5001,protocol:'https'})
 
 export default class Patient extends React.Component {
   async componentWillMount() {
@@ -55,6 +57,7 @@ export default class Patient extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.handlePersonalClick = this.handlePersonalClick.bind(this);
+    this.handleFileClick = this.handleFileClick.bind(this);
     this.state = {
       recID: "",
       pname: "",
@@ -69,6 +72,9 @@ export default class Patient extends React.Component {
       patientName:"",
       mnum:"",
       isDetailsFilled:false,
+      buffer: null,
+      imageHash:null,
+      canSubmit:true
     };
   }
 
@@ -81,10 +87,15 @@ export default class Patient extends React.Component {
         this.state.pname,
         this.state.dDate,
         this.state.hname,
-        this.state.price).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  window.location.reload(false);});
+        this.state.price,this.state.imageHash).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  window.location.reload(false);});
       })
     }
 
+ async handleFileClick(event){
+    event.preventDefault();
+    const hash = await ipfs.add(this.state.buffer)
+    this.setState({imageHash:hash.path},()=>this.setState({canSubmit:false}))
+  }
   handlePersonalClick(event) {
     event.preventDefault();
     window.web3.eth.getCoinbase((err, account) => {
@@ -95,6 +106,16 @@ export default class Patient extends React.Component {
         this.state.mnum,
         this.state.bloodgroup).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  window.location.reload(false);});
       })
+    }
+
+    captureFile = (event) => {
+      event.preventDefault()
+      const file = event.target.files[0];
+      const reader = new window.FileReader()
+      reader.readAsArrayBuffer(file)
+      reader.onloadend = () => {
+        this.setState({ buffer:Buffer(reader.result) })
+      }
     }
 
   render() {
@@ -224,9 +245,19 @@ export default class Patient extends React.Component {
                 />
               </div>
               <div className="form-group">
+                <input
+                  type="file"
+                  onChange={this.captureFile}
+                  className="form-control"
+                />
+                </div>
+                <div className="form-group">
+                <input type="button" class = "btn btn-primary" onClick={this.handleFileClick} value="Upload"/>
+              </div>
+              <div className="form-group">
                 <button
                   className="btn btn-primary btn-block"
-                  onClick={this.handleClick}
+                  onClick={this.handleClick} disabled={this.state.canSubmit}
                 >
                   Submit
                 </button>
@@ -252,6 +283,7 @@ export default class Patient extends React.Component {
                   <th>Date</th>
                   <th>Hospital Name</th>
                   <th>Price</th>
+                  <th>Bill Document</th>
                   <th>Admins Approval</th>
                   <th>Insurance Claim status</th>
               </tr>
@@ -265,6 +297,7 @@ export default class Patient extends React.Component {
                      <td>{record.date}</td>
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
+                     <td><a href={`https:ipfs.infura.io/ipfs/${record.imageHash}`} target='_blank'>View Document</a></td>
                      <td>({record.signatureCount}/2)</td>
                      <td>{record.isApproved?"Approved":record.requestAnswered?"Rejected":"Pending"}</td>
                    </tr>:null
