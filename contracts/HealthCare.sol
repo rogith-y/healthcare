@@ -16,6 +16,7 @@ contract HealthCare {
         mapping(address => uint256) signatures;
         bool isApproved;
         bool requestAnswered;
+        string imageHash;
     }
 
     struct PRecord {
@@ -46,7 +47,8 @@ contract HealthCare {
         string testName,
         string date,
         string hospitalName,
-        uint256 price
+        uint256 price,
+        string imageHash
     );
     event precordCreated(
         string patientName,
@@ -77,7 +79,8 @@ contract HealthCare {
         string memory _tName,
         string memory _date,
         string memory hName,
-        uint256 price
+        uint256 price,
+        string memory _imageHash
     ) public {
         Record storage _newrecord = _records[_ID];
 
@@ -89,11 +92,12 @@ contract HealthCare {
         _newrecord.date = _date;
         _newrecord.hospitalName = hName;
         _newrecord.price = price;
+        _newrecord.imageHash = _imageHash;
         _newrecord.isValue = true;
         _newrecord.signatureCount = 0;
         recordCount++;
         recordsArr.push(_ID);
-        emit recordCreated(_newrecord.ID, _tName, _date, hName, price);
+        emit recordCreated(_newrecord.ID, _tName, _date, hName, price, _imageHash);
     }
 
     function newPatientRecord(
