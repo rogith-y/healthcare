@@ -1,4 +1,4 @@
-pragma solidity ^0.5.16;
+pragma solidity >=0.4.24;
 
 contract HealthCare {
     address private hospitalAdmin;
@@ -32,7 +32,7 @@ contract HealthCare {
     }
 
     constructor() public {
-        hospitalAdmin = msg.sender;
+        hospitalAdmin = 0xb19B5755DBE7F1EEB226C64EE0479CB9C200fD1b;
         labAdmin = 0x41b3889b82E06B0434da6a11Aa7cCc0D641dC21c;
     }
 

@@ -105,6 +105,7 @@ export default class Labadmin extends React.Component {
                   <th>Date</th>
                   <th>Hospital Name</th>
                   <th>Price</th>
+                  <th>Patient Bill Document</th>
                   <th>Approved</th>
                 </tr>
               </thead>
@@ -117,6 +118,7 @@ export default class Labadmin extends React.Component {
                      <td>{record.date}</td>
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
+                     <td><a href={`https:ipfs.infura.io/ipfs/${record.imageHash}`} target='_blank'>View Document</a></td>
                      <td>({record.signatureCount}/2)</td>
                    </tr>
                  ) 

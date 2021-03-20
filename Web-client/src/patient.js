@@ -94,7 +94,7 @@ export default class Patient extends React.Component {
  async handleFileClick(event){
     event.preventDefault();
     const hash = await ipfs.add(this.state.buffer)
-    this.setState({imageHash:hash.path},()=>this.setState({canSubmit:false}))
+    this.setState({imageHash:hash.path},()=>{alert("File upload complete!");this.setState({canSubmit:false})})
   }
   handlePersonalClick(event) {
     event.preventDefault();
