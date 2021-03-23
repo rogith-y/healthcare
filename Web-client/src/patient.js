@@ -290,6 +290,7 @@ export default class Patient extends React.Component {
               </thead>
               <tbody>
                 {this.state.records.map((record)=>{
+                  console.log(record)
                  return(record.pAddr === this.state.account ?
                    <tr>
                      <td>{record.ID}</td>
@@ -299,7 +300,7 @@ export default class Patient extends React.Component {
                      <td>{record.price}</td>
                      <td><a href={`https:ipfs.infura.io/ipfs/${record.imageHash}`} target='_blank'>View Document</a></td>
                      <td>({record.signatureCount}/2)</td>
-                     <td>{record.isApproved?"Approved":record.requestAnswered?"Rejected":"Pending"}</td>
+                     <td>{record.isApproved === "1" ?"Approved":record.isApproved === "2" ? "Rejected":"Pending"}</td>
                    </tr>:null
                  )
                 })}
