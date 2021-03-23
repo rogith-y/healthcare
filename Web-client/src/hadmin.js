@@ -123,7 +123,7 @@ export default class Hadmin extends React.Component {
                      <td>{record.date}</td>
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
-                     <td><a href={`https:ipfs.infura.io/ipfs/${record.imageHash}`} target='_blank'>View Document</a></td>
+                     <td><a href={`http://ipfs.infura.io/ipfs/${record.imageHash}`} target='_blank'>View Document</a></td>
                      <td>({record.signatureCount}/2)</td>
                    </tr>
                  ) 

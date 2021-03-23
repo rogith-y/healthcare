@@ -87,6 +87,7 @@ import Web3 from "web3";
                 <th>Date</th>
                 <th>Hospital Name</th>
                 <th>Price</th>
+                <th>Patient Bill Document</th>
                 <th>Admins Approval</th>
                 <th></th>
              </tr>
@@ -100,6 +101,7 @@ import Web3 from "web3";
                      <td>{record.date}</td>
                      <td>{record.hospitalName}</td>
                      <td>{record.price}</td>
+                     <td><a href={`http://ipfs.infura.io/ipfs/${record.imageHash}`} target='_blank'>View Document</a></td>
                      <td>({record.signatureCount}/2) Approved</td>
                      <td><button type="button" value={record.ID} class="btn btn-success" onClick={this.handleApprove}>Approve</button>  <button class="btn btn-danger" type="button" value={record.ID} onClick={this.handleReject}>Reject</button></td>
                    </tr>:null
