@@ -87,7 +87,20 @@ export default class Patient extends React.Component {
         this.state.pname,
         this.state.dDate,
         this.state.hname,
-        this.state.price,this.state.imageHash).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  window.location.reload(false);});
+        this.state.price,
+        this.state.imageHash
+        ).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  this.loadBlockchainData(); 
+        this.setState({
+        recID: "",
+        pname: "",
+        dDate: "",
+        hname: "",
+        price: "",
+        imageHash:null,
+        canSubmit:true
+      })
+      this.fileInput.value=""
+    });
       })
     }
 
@@ -104,7 +117,14 @@ export default class Patient extends React.Component {
         this.state.patientName,
         this.state.dob,
         this.state.mnum,
-        this.state.bloodgroup).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  window.location.reload(false);});
+        this.state.bloodgroup).send({ from: account}).then(()=>{ this.setState({ message: "Record created" });  this.loadBlockchainData();
+      this.setState({
+        bloodgroup:"",
+        dob:"",
+        patientName:"",
+        mnum:""
+      })
+      });
       })
     }
 
@@ -247,6 +267,7 @@ export default class Patient extends React.Component {
               <div className="form-group">
                 <input
                   type="file"
+                  ref={ref=> this.fileInput = ref}
                   onChange={this.captureFile}
                   className="form-control"
                 />

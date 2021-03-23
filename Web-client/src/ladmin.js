@@ -61,7 +61,10 @@ export default class Labadmin extends React.Component {
     window.web3.eth.getCoinbase((err, account) => {
       this.health.methods
       .signRecord(this.state.recID)
-      .send({ from: account }).then(()=>{this.setState({ message: "Record approved!" }); window.location.reload(false);}); 
+      .send({ from: account }).then(()=>{this.setState({ message: "Record approved!" });this.loadBlockchainData();
+    this.setState({
+      recID: ""
+    })}); 
     })
   }
 

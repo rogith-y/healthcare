@@ -14,9 +14,9 @@ contract HealthCare {
         bool isValue;
         address pAddr;
         mapping(address => uint256) signatures;
-        bool isApproved;
-        bool requestAnswered;
+        uint isApproved;
         string imageHash;
+        bool notificationViewed;
     }
 
     struct PRecord {
@@ -65,13 +65,14 @@ contract HealthCare {
     );
     event approved(
         uint256 ID,
-        bool isApproved,
-        bool requestAnswered
+        uint isApproved
     );
     event rejected(
         uint256 ID,
-        bool isApproved,
-        bool requestAnswered
+        uint isApproved
+    );
+    event notifViewed(
+        uint256 ID
     );
     // Create new record
     function newRecord(
@@ -120,18 +121,21 @@ contract HealthCare {
 
     function ApproveBill(uint256 _ID) public{
          Record storage record = _records[_ID];
-         record.isApproved = true;
-         record.requestAnswered = true;
-         emit approved(_ID,record.isApproved,record.requestAnswered);
+         record.isApproved = 1;
+         emit approved(_ID,record.isApproved);
     }
 
      function RejectBill(uint256 _ID) public{
          Record storage record = _records[_ID];
-         record.isApproved = false;
-         record.requestAnswered = true;
-         emit rejected(_ID,record.isApproved,record.requestAnswered);
+         record.isApproved = 2;
+         emit rejected(_ID,record.isApproved);
     }
 
+    function notifView(uint256 _ID) public{
+         Record storage record = _records[_ID];
+         record.notificationViewed = true;
+         emit notifViewed(_ID);
+    }
     // Function to sign a record
     function signRecord(uint256 _ID) public signOnly {
         Record storage records = _records[_ID];

@@ -52,7 +52,7 @@ import Web3 from "web3";
     let id = event.target.value;
     window.web3.eth.getCoinbase((err, account) => {
       this.setState({account:account})
-      this.health.methods.ApproveBill(id).send({ from: account}).then(()=>{window.location.reload(false);});
+      this.health.methods.ApproveBill(id).send({ from: account}).then(()=>{this.loadBlockchainData()});
         })
   }
   
@@ -61,7 +61,7 @@ import Web3 from "web3";
     let id = event.target.value;
     window.web3.eth.getCoinbase((err, account) => {
       this.setState({account:account})
-      this.health.methods.RejectBill(id).send({ from: account}).then(()=>{window.location.reload(false);});
+      this.health.methods.RejectBill(id).send({ from: account}).then(()=>{this.loadBlockchainData()});
         })
   }
   
