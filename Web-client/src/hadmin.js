@@ -6,8 +6,9 @@ export default class Hadmin extends React.Component {
 
   async componentWillMount() {
     window.ethereum.enable();
+    this.setState({loading:true})
     await this.loadWeb3();
-    await this.loadBlockchainData();
+    await this.loadBlockchainData().then(()=>this.setState({loading:false}));
   }
   async loadWeb3() {
     if (window.ethereum) {
@@ -53,18 +54,21 @@ export default class Hadmin extends React.Component {
     this.state = {
       recID: "",
       message: "",
-      records:[]
+      records:[],
+      loading:false
     };
   }
 
   async handleClick(event) {
     event.preventDefault();
+    this.setState({loading:true})
     window.web3.eth.getCoinbase((err, account) => {
       this.health.methods
       .signRecord(this.state.recID)
       .send({ from: account }).then(()=>{this.setState({ message: "Record approved!" }); this.loadBlockchainData();
     this.setState({
-      recID: ""
+      recID: "",
+      loading:false
     })}); 
     })
     }
@@ -72,6 +76,11 @@ export default class Hadmin extends React.Component {
   render() {
     return (
       <div className="container container-fluid login-conatiner">
+        {this.state.loading?
+        <div class="loading-container">
+        <div class="loading-spin"></div>
+        </div>:null
+        } 
         <div className="col-md-4">
           <h3 className="text-center">Hospital Admin</h3>
           <div className="login-form">

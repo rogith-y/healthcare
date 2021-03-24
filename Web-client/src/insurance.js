@@ -6,8 +6,9 @@ import Web3 from "web3";
  export default class Insurance extends React.Component{
   async componentWillMount() {
     window.ethereum.enable();
+    this.setState({loading:true})
     await this.loadWeb3();
-    await this.loadBlockchainData();
+    await this.loadBlockchainData().then(()=>this.setState({loading:false}));
   }
   async loadWeb3() {
     if (window.ethereum) {
@@ -49,19 +50,21 @@ import Web3 from "web3";
 
   handleApprove(event){
     event.preventDefault();
+    this.setState({loading:true})
     let id = event.target.value;
     window.web3.eth.getCoinbase((err, account) => {
       this.setState({account:account})
-      this.health.methods.ApproveBill(id).send({ from: account}).then(()=>{this.loadBlockchainData()});
+      this.health.methods.ApproveBill(id).send({ from: account}).then(()=>{this.loadBlockchainData(); this.setState({loading:false})});
         })
   }
   
   handleReject(event){
     event.preventDefault();
+    this.setState({loading:true})
     let id = event.target.value;
     window.web3.eth.getCoinbase((err, account) => {
       this.setState({account:account})
-      this.health.methods.RejectBill(id).send({ from: account}).then(()=>{this.loadBlockchainData()});
+      this.health.methods.RejectBill(id).send({ from: account}).then(()=>{this.loadBlockchainData(); this.setState({loading:false})});
         })
   }
   
@@ -70,12 +73,18 @@ import Web3 from "web3";
     this.handleApprove = this.handleApprove.bind(this);
     this.handleReject = this.handleReject.bind(this);
     this.state = {
-      records:[]
+      records:[],
+      loading:false
     };
   }
    render(){
      return(
       <div className="col-md-12">
+        {this.state.loading?
+        <div class="loading-container">
+        <div class="loading-spin"></div>
+        </div>:null
+        } 
       <h3  className="text-center">Insurance Page</h3>
       <div className="c-list">
       <h2 className="text-center">Approved Records</h2>

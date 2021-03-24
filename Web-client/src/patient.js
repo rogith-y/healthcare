@@ -2,6 +2,7 @@ import React from "react";
 // import ReactDOM from "react-dom";
 import HealthCare from "./contracts/HealthCare.json";
 import Web3 from 'web3'
+import './load.css'
 
 const ipfsClient = require('ipfs-http-client')
 const ipfs = ipfsClient({host:'ipfs.infura.io',port:5001,protocol:'https'})
@@ -9,8 +10,9 @@ const ipfs = ipfsClient({host:'ipfs.infura.io',port:5001,protocol:'https'})
 export default class Patient extends React.Component {
   async componentWillMount() {
     window.ethereum.enable();
+    this.setState({loading:true})
     await this.loadWeb3();
-    await this.loadBlockchainData();
+    await this.loadBlockchainData().then(()=>this.setState({loading:false}));
   }
   async loadWeb3() {
     if (window.ethereum) {
@@ -74,12 +76,14 @@ export default class Patient extends React.Component {
       isDetailsFilled:false,
       buffer: null,
       imageHash:null,
-      canSubmit:true
+      canSubmit:true,
+      loading:false
     };
   }
 
   handleClick(event) {
     event.preventDefault();
+    this.setState({loading:true})
     window.web3.eth.getCoinbase((err, account) => {
     this.setState({account:account})
     this.health.methods.newRecord(
@@ -97,7 +101,8 @@ export default class Patient extends React.Component {
         hname: "",
         price: "",
         imageHash:null,
-        canSubmit:true
+        canSubmit:true,
+        loading:false
       })
       this.fileInput.value=""
     });
@@ -111,6 +116,7 @@ export default class Patient extends React.Component {
   }
   handlePersonalClick(event) {
     event.preventDefault();
+    this.setState({loading:true})
     window.web3.eth.getCoinbase((err, account) => {
       this.setState({account})
     this.health.methods.newPatientRecord(
@@ -122,7 +128,8 @@ export default class Patient extends React.Component {
         bloodgroup:"",
         dob:"",
         patientName:"",
-        mnum:""
+        mnum:"",
+        loading:false
       })
       });
       })
@@ -141,6 +148,11 @@ export default class Patient extends React.Component {
   render() {
     return (
       <div className="container container-fluid login-conatiner">
+        {this.state.loading?
+        <div class="loading-container">
+        <div class="loading-spin"></div>
+        </div>:null
+        } 
         <div className="col-md-4">
           {this.state.isDetailsFilled ? null:
         <div className="login-form">
