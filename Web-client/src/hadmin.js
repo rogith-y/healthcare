@@ -69,7 +69,9 @@ export default class Hadmin extends React.Component {
     this.setState({
       recID: "",
       loading:false
-    })}); 
+    })
+    setTimeout(()=>{this.setState({message:""}) }, 3000);
+  }); 
     })
     }
 
@@ -104,7 +106,7 @@ export default class Hadmin extends React.Component {
               </button>
             </div>
             {this.state.message && (
-              <p className="alert alert-danger fade in">{this.state.message}</p>
+              <p className="alert alert-success fade in">{this.state.message}</p>
             )}
           </div>
         </div>

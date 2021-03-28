@@ -6,7 +6,7 @@
   left: 0;
   right: 0;
   z-index: 1;
-  background-color: rgba(57, 70, 78, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,49 +21,49 @@
   0% {
     transform: rotate(45deg);
     border-radius: 5px;
-    border-color: #4f7ff8;
+    border-color: rgb(103, 3, 143);
     width: 84px;
     height: 84px;
   }
   17% {
     transform: rotate(360deg);
     border-radius: 18px;
-    border-color: #00d69d;
+    border-color:  rgb(103, 3, 143);
     width: 59.64px;
     height: 59.64px;
   }
   34% {
     transform: rotate(650deg);
     border-radius: 100px;
-    border-color: #8cdfb1;
+    border-color: rgb(103, 3, 143);
     width: 47.88px;
     height: 23.52px;
   }
   51% {
     transform: rotate(800deg);
     border-radius: 50%;
-    border-color: #ebce5c;
+    border-color:  rgb(103, 3, 143);
     width: 23.52px;
     height: 23.52px;
   }
   68% {
     transform: rotate(650deg);
     border-radius: 100px;
-    border-color: #8cdfb1;
+    border-color:  rgb(103, 3, 143);
     width: 47.88px;
     height: 23.52px;
   }
   85% {
     transform: rotate(360deg);
     border-radius: 18px;
-    border-color: #00d69d;
+    border-color: rgb(103, 3, 143);
     width: 59.64px;
     height: 59.64px;
   }
   100% {
     transform: rotate(45deg);
     border-radius: 5px;
-    border-color: #4f7ff8;
+    border-color:  rgb(103, 3, 143);
     width: 84px;
     height: 84px;
   }

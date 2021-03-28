@@ -104,6 +104,7 @@ export default class Patient extends React.Component {
         canSubmit:true,
         loading:false
       })
+      setTimeout(()=>{this.setState({message:""}) }, 3000);
       this.fileInput.value=""
     });
       })
@@ -131,6 +132,7 @@ export default class Patient extends React.Component {
         mnum:"",
         loading:false
       })
+      setTimeout(()=>{this.setState({message:""}) }, 3000);
       });
       })
     }
@@ -151,6 +153,7 @@ export default class Patient extends React.Component {
         {this.state.loading?
         <div class="loading-container">
         <div class="loading-spin"></div>
+        &nbsp; &nbsp; &nbsp; Processing Your Request...
         </div>:null
         } 
         <div className="col-md-4">
@@ -182,7 +185,7 @@ export default class Patient extends React.Component {
               </div>
               <div className="form-group">
                 <input
-                  type="text"
+                  type="number"
                   value={this.state.mnum}
                   onChange={event =>
                     this.setState({ mnum: event.target.value })
@@ -211,7 +214,7 @@ export default class Patient extends React.Component {
                 </button>
               </div>
               {this.state.message && (
-                <p className="alert alert-danger fade in">
+                <p className="alert alert-success fade in">
                   {this.state.message}
                 </p>
               )}
@@ -223,7 +226,7 @@ export default class Patient extends React.Component {
               <h2 className="text-center">Bill Details</h2>
               <div className="form-group">
                 <input
-                  type="text"
+                  type="number"
                   value={this.state.recID}
                   onChange={event =>
                     this.setState({ recID: event.target.value })
@@ -267,7 +270,7 @@ export default class Patient extends React.Component {
               </div>
               <div className="form-group">
                 <input
-                  type="text"
+                  type="number"
                   value={this.state.price}
                   onChange={event =>
                     this.setState({ price: event.target.value })
@@ -296,7 +299,7 @@ export default class Patient extends React.Component {
                 </button>
               </div>
               {this.state.message && (
-                <p className="alert alert-danger fade in">
+                <p className="alert alert-success fade in">
                   {this.state.message}
                 </p>
               )}
